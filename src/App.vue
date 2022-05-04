@@ -3,11 +3,18 @@ import TopBar from "./components/TopBar.vue";
 </script>
 
 <template>
-  <div v-bind:class=containerClass style="overflow-x: hidden;">
+  <div v-bind:class="containerClass" style="overflow-x: hidden">
     <header class="header">
       <TopBar />
     </header>
-    <main style="flex: 1;flex-direction: column;display: flex;max-height: calc(100% - 3.75vw);">
+    <main
+      style="
+        flex: 1;
+        flex-direction: column;
+        display: flex;
+        max-height: calc(100% - 3.75vw);
+      "
+    >
       <router-view />
     </main>
   </div>
@@ -19,7 +26,7 @@ body {
 }
 .container {
   height: 100vh;
-  background: url("./res/background.jpg");
+  background: #fff;
   background-size: cover;
   background-attachment: fixed;
   min-width: 1080px;
@@ -34,32 +41,36 @@ body {
   flex-direction: column;
 }
 .header {
-  min-height: 3.75vw;
-  min-width: 1080px;
+  height: 60px;
   position: sticky;
   top: 0px;
   z-index: 1;
+  background: #c54646;
 }
 </style>
 <script>
 export default {
-  setup() {
-    
-  },
+  setup() {},
   data() {
     return {
-      containerClass:'container'
+      containerClass: "container",
     };
   },
-  watch:{
-  $route(to,from){
-    const whiteList = ['/industryDetail','/enterpriseDetail','/bondDetail','/bond','/supplyChain']
-    if(whiteList.includes(to.path)){
-      this.$data.containerClass = 'containerWhite'
-    }else{
-      this.$data.containerClass = 'container'
-    }
-  }
-},
+  watch: {
+    // $route(to, from) {
+    //   const whiteList = [
+    //     "/industryDetail",
+    //     "/enterpriseDetail",
+    //     "/bondDetail",
+    //     "/bond",
+    //     "/supplyChain",
+    //   ];
+    //   if (whiteList.includes(to.path)) {
+    //     this.$data.containerClass = "container";
+    //   } else {
+    //     this.$data.containerClass = "container";
+    //   }
+    // },
+  },
 };
 </script>

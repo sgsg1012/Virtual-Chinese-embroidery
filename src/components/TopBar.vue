@@ -1,77 +1,82 @@
 <template>
-  <div class="topBar" :class="hasShadow ? 'topBarShadow':''">
+  <div class="topBar" :class="hasShadow ? 'topBarShadow' : ''">
     <div class="title">
-      <img v-bind:src="hasShadow ? './ESG_Blue.png' :'./ESG.png'" alt="ESG" />
-      <div :class="titleClass">ESG评估系统</div>
+      <div class="text" @click="this.$router.push({ path: '/' })">
+        那些花儿-汉绣非遗
+      </div>
+    </div>
+    <div class="searchBar">
+      <searchBar class="search" placeholder="按城市、地址搜索" @search="search"
+        >搜索</searchBar
+      >
     </div>
     <div class="menu">
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo"
-        mode="horizontal"
-        v-bind:background-color="bgColor"
-        v-bind:text-color="textColor"
-        active-text-color="rgba(70, 219, 242, 1)"
-        @select="this.handleSelect"
-        router
+      <div class="language" style="margin: 20px">简体中文</div>
+      <div class="date" style="margin: 20px">
+        {{
+          new Date().getFullYear() +
+          "-" +
+          (new Date().getMonth() + 1) +
+          "-" +
+          new Date().getDate()
+        }}
+      </div>
+      <div class="week" style="margin: 20px">
+        {{ this.weeks[new Date().getDay()] }}
+      </div>
+      <el-button
+        type="text"
+        class="user"
+        style="margin: 20px; color: white"
+        @click="this.$router.push({ path: '/user' })"
       >
-        <el-menu-item index="/">首页</el-menu-item>
-        <el-menu-item index="/search">ESG评估</el-menu-item>
-        <el-menu-item index="/literature">相关文献</el-menu-item>
-      </el-menu>
+        <img src="/src/res/user.jpg" style="border-radius: 100%" alt="" />
+      </el-button>
     </div>
   </div>
 </template>
 
 <script>
 import "../css/font.css";
+import searchBar from "../components/searchBar2.vue";
 export default {
   name: "topBar",
   data() {
     return {
-      textColor:'#fff',
-      bgColor:'#679faa',
-      titleClass:'text',
-      hasShadow:false,
-      activeIndex:'/'
+      textColor: "#fff",
+      bgColor: "#679faa",
+      titleClass: "text",
+      hasShadow: false,
+      activeIndex: "/",
+      weeks: [
+        "星期日",
+        "星期一",
+        "星期二",
+        "星期三",
+        "星期四",
+        "星期五",
+        "星期六",
+      ],
     };
   },
-  watch:{
-  $route(to,from){
-    const whiteList = ['/industryDetail','/enterpriseDetail','/bondDetail','/bond','/supplyChain']
-    if(whiteList.includes(to.path)){
-      //this.$data.containerStyle.background = '#FFF'
-      //console.log(to.path)
-      this.$data.textColor = '#000';
-      this.$data.bgColor = '#fff';
-      this.$data.titleClass = 'textBlue';
-      this.$data.hasShadow = true;
-      this.$data.activeIndex = '/search';
-      //console.log(this.$data)
-    }else{
-      this.$data.textColor = '#fff';
-      this.$data.bgColor = '#679faa';
-      this.$data.titleClass = 'text';
-      this.$data.hasShadow = false;
-    }
-  }
-},
+  components: {
+    searchBar,
+  },
+  watch: {},
   methods: {
-    handleSelect(key, keyPath) {
-      //console.log(key,keyPath);
-      //   console.log(this.$route.path);
+    search(data) {
+      console.log(data);
     },
   },
   computed: {
     // 计算属性的 getter
   },
-
 };
 </script>
 <style lang="less" scoped>
-.topBarShadow{
-  box-shadow: -5px 3px 10px rgba(242, 251, 252, 1);
-  background: #ffffff !important;
+.topBarShadow {
+  //   box-shadow: -5px 3px 10px rgba(242, 251, 252, 1);
+  background: #c54646 !important;
 }
 
 .topBar {
@@ -80,47 +85,38 @@ export default {
   justify-content: space-between;
   height: 100%;
   width: 100%;
-  background: #ffffff66;
+  background: #c54646;
   .title {
     display: flex;
     flex-direction: row;
     align-items: center;
-    flex-grow: 20;
-    img {
-      width: 5.6vw;
-      height: 2.76vw;
-      margin-right: 2.08vw;
-      margin-left: 2.08vw;
-    }
     .text {
       font-size: 16px;
-      font-family: "庞门";
       color: rgba(255, 255, 255, 1);
       letter-spacing: 2px;
+      margin: 30px;
     }
-
-    .textBlue{
-      font-size: 16px;
-      font-family: "庞门";
-      color: rgba(0, 165, 189, 1);
-      letter-spacing: 2px;
+  }
+  .searchBar {
+    flex-grow: 20;
+    margin-right: 200px;
+    margin-top: auto;
+    margin-bottom: auto;
+    .search {
+      width: 400px;
     }
+    // margin: auto;
   }
   .menu {
     flex-grow: 1;
-    .el-menu-demo {
-      border-bottom: none;
-      text-decoration: none;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0);
-      .el-menu-item {
-        margin-right: 50px;
-        font-family: source-han-sans-simplified-c, sans-serif;
-        font-weight: 400;
-        font-style: normal;
-      }
-    }
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 1);
+    letter-spacing: 2px;
+    margin: 30px;
   }
 }
 </style>
